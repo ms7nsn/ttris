@@ -11,37 +11,38 @@ class Prefs(context: Context) {
 
     private val sp = context.applicationContext.getSharedPreferences("tetris_prefs", Context.MODE_PRIVATE)
 
-    var ghost by mutableStateOf(sp.getBoolean(K_GHOST, true))
-        private set
-    var grid by mutableStateOf(sp.getBoolean(K_GRID, true))
-        private set
-    var dynamicColor by mutableStateOf(sp.getBoolean(K_DYNAMIC, true))
-        private set
+    private var _ghost by mutableStateOf(sp.getBoolean(K_GHOST, true))
+    private var _grid by mutableStateOf(sp.getBoolean(K_GRID, true))
+    private var _dynamicColor by mutableStateOf(sp.getBoolean(K_DYNAMIC, true))
+    private var _themeMode by mutableStateOf(sp.getInt(K_THEME, 0))
+
+    val ghost: Boolean get() = _ghost
+    val grid: Boolean get() = _grid
+    val dynamicColor: Boolean get() = _dynamicColor
 
     /** 0 = système, 1 = clair, 2 = sombre */
-    var themeMode by mutableStateOf(sp.getInt(K_THEME, 0))
-        private set
+    val themeMode: Int get() = _themeMode
 
     var scores by mutableStateOf(loadScores())
         private set
 
     fun setGhost(v: Boolean) {
-        ghost = v
+        _ghost = v
         sp.edit().putBoolean(K_GHOST, v).apply()
     }
 
     fun setGrid(v: Boolean) {
-        grid = v
+        _grid = v
         sp.edit().putBoolean(K_GRID, v).apply()
     }
 
     fun setDynamicColor(v: Boolean) {
-        dynamicColor = v
+        _dynamicColor = v
         sp.edit().putBoolean(K_DYNAMIC, v).apply()
     }
 
     fun setThemeMode(v: Int) {
-        themeMode = v
+        _themeMode = v
         sp.edit().putInt(K_THEME, v).apply()
     }
 
